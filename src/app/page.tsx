@@ -12,10 +12,10 @@ import path from "path";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "RifalosID | Premium WhatsApp Gateway",
+  title: "Riches Tech | Premium WhatsApp Gateway",
   description: "A powerful, self-hosted dashboard to manage your WhatsApp sessions, schedules, and auto-replies. Built for modern businesses.",
   openGraph: {
-    title: "RifalosID | Premium WhatsApp Gateway",
+    title: "Riches Tech | Premium WhatsApp Gateway",
     description: "Self-hosted WhatsApp Gateway with multi-device support, auto-replies, and API integration.",
     type: "website",
   },
