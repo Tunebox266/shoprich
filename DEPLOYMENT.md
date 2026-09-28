@@ -1,73 +1,68 @@
 # Deployment Guide — WA-AKG
 
-Satu aplikasi saja. Engine WhatsApp + dashboard + landing/pricing semuanya jadi
-satu di repo ini. Tidak ada app marketing terpisah.
+This is a single application. The WhatsApp engine, dashboard, and landing/pricing all live in this repository. There is no separate marketing app.
 
-## Realita hosting (jujur, per 2026)
+## Real hosting reality (honest, as of 2026)
 
-App ini butuh proses **always-on** (WhatsApp/Baileys WebSocket 24 jam + socket.io
-+ node-cron). Platform serverless (Vercel/Netlify/Cloudflare) **tidak bisa**.
-Dan PaaS "gratis + always-on + tanpa kartu" sudah hampir punah:
+This app requires a continuously running process (**WhatsApp/Baileys WebSocket 24/7 + socket.io + node-cron**). Serverless platforms (Vercel/Netlify/Cloudflare) cannot support it.
+And "free + always-on + no card" PaaS options are almost gone:
 
-| Platform | Biaya | 24/7? | Catatan |
+| Platform | Cost | 24/7? | Notes |
 |---|---|---|---|
-| **Oracle Cloud Always Free** | 🆓 Gratis selamanya | ✅ | VM ARM (≤24GB RAM). **Ini VPS** (perlu setup), daftar butuh kartu verifikasi |
-| **Perangkat sendiri** (PC/RasPi/Termux) | 🆓 | ✅ | Tanpa cloud, tanpa kartu. Cocok pemakaian pribadi |
-| **Render Starter** | 💲 ~$7/bln | ✅ | Paling anti-ribet, stabil |
-| **VPS murah** (Contabo/Hetzner/dll) | 💲 ~$3–5/bln | ✅ | Kontrol penuh |
-| **Render Free** | 🆓 | ❌ | Auto-sleep 15 menit → WA putus. Cuma buat tes |
-| **Koyeb / Fly.io / Railway** | trial→💲 | — | Tidak gratis lagi (butuh kartu / habis trial) |
-| **Vercel / Netlify** | 🆓 | ❌ | Serverless → engine WA mati. UI saja |
+| **Oracle Cloud Always Free** | 🆓 Free forever | ✅ | ARM VM (≤24GB RAM). This is a VPS (requires setup); signup needs a verification card |
+| **Your own device** (PC/RasPi/Termux) | 🆓 | ✅ | No cloud, no card. Good for personal use |
+| **Render Starter** | 💲 ~$7/mo | ✅ | Easiest and stable |
+| **Cheap VPS** (Contabo/Hetzner/etc.) | 💲 ~$3–5/mo | ✅ | Full control |
+| **Render Free** | 🆓 | ❌ | Auto-sleep after 15 minutes → WA disconnects. For testing only |
+| **Koyeb / Fly.io / Railway** | trial→💲 | — | No longer free (needs card / trial expires) |
+| **Vercel / Netlify** | 🆓 | ❌ | Serverless → WhatsApp engine dies. UI only |
 
-> Kesimpulan: **gratis + tanpa VPS + WA 24 jam = tidak ada lagi.** Pilihan gratis
-> sungguhan = Oracle Always Free (VPS) atau hosting di perangkat sendiri.
+> Conclusion: **free + no VPS + WA 24/7 = no longer realistic**. Real free options are Oracle Always Free or self-hosting on your own device.
 
 ---
 
-## ⚠️ Kenapa engine TIDAK jalan di Vercel/Netlify/Cloudflare
+## ⚠️ Why the engine does NOT work on Vercel / Netlify / Cloudflare
 
 - Custom HTTP server + **Socket.io** (`src/server/index.ts` via `bootstrap.ts`)
-- Koneksi **WhatsApp (Baileys) persisten di memori** (`waManager`)
-- **node-cron** (scheduler + auto-broadcast), plus state di memori (anti-spam, lock JPM)
+- Persistent **WhatsApp (Baileys)** connection in memory (`waManager`)
+- **node-cron** scheduler + auto-broadcast, plus in-memory state (anti-spam, JPM lock)
 
-Serverless mematikan fungsi setelah tiap request → koneksi WA putus terus. Bukan bug.
+Serverless platforms shut down after each request → the WhatsApp connection keeps dropping. This is not a bug.
 
 ---
 
-## Opsi A — Oracle Cloud Always Free (gratis selamanya, butuh setup VPS)
+## Opsi A — Oracle Cloud Always Free (free forever, but requires setup)
 
-1. Daftar di [oracle.com/cloud/free](https://www.oracle.com/cloud/free/) (butuh kartu
-   untuk verifikasi; Always Free tidak ditagih).
-2. Buat **VM Instance** → pilih shape **Ampere A1 (ARM)**, OS Ubuntu. Always Free
-   memberi hingga 4 vCPU / 24GB RAM gratis.
-3. Buka port firewall (Security List + `iptables`/`ufw`) untuk port HTTP-mu.
-4. SSH ke VM, install Docker:
+1. Sign up at [oracle.com/cloud/free](https://www.oracle.com/cloud/free/) (verification card may be required).
+2. Create a **VM Instance** → choose **Ampere A1 (ARM)**, OS Ubuntu. Always Free gives up to 4 vCPU / 24GB RAM.
+3. Open firewall ports (Security List + `iptables`/`ufw`) for your HTTP port.
+4. SSH into the VM and install Docker:
    ```bash
    curl -fsSL https://get.docker.com | sh
    ```
-5. Clone repo + build & run (lihat "Opsi D — Docker" di bawah).
-6. Pasang Nginx/Caddy untuk HTTPS + domain (opsional).
+5. Clone the repo and build/run it (see "Ops D — Docker" below).
+6. Install Nginx/Caddy for HTTPS + domain (optional).
 
-> ARM kadang kehabisan stok; coba region lain atau ulangi beberapa saat kemudian.
+> ARM capacity can run out; try another region or retry later.
 
-## Opsi B — Perangkat sendiri (100% gratis)
+## Opsi B — Self-hosted (100% free)
 
-PC/laptop nganggur, Raspberry Pi, atau Android (Termux). Asal koneksi internet stabil
-dan perangkat nyala terus. Jalankan via Docker atau Node langsung (lihat Opsi D / E).
+A spare PC/laptop, Raspberry Pi, or Android (Termux). As long as your internet connection is stable and the device stays on, it works.
+Run it via Docker or directly with Node (see Ops D / E).
 
-## Opsi C — Render Starter (berbayar, paling gampang)
+## Opsi C — Render Starter (paid, easiest)
 
-1. Render → **New → Blueprint**, pilih repo (otomatis pakai `render.yaml`).
-2. Isi env var rahasia (`sync: false`) di dashboard.
-3. Disk `/app/data` sudah didefinisikan untuk media (persisten).
-4. Pakai plan **Starter** — JANGAN Free (auto-sleep → WA putus).
+1. Render → **New → Blueprint**, choose the repo (it will use `render.yaml` automatically).
+2. Fill in secret env vars (`sync: false`) in the dashboard.
+3. Disk `/app/data` is already defined for media (persistent).
+4. Use the **Starter** plan — do NOT use Free (auto-sleep → WA disconnects).
 
-## Opsi D — Docker (untuk Oracle / VPS / perangkat sendiri)
+## Opsi D — Docker (for Oracle / VPS / self-hosted)
 
 ```bash
 git clone https://github.com/Vinsaeroy/WA-AKG.git
 cd WA-AKG
-# siapkan .env dari .env.example
+# prepare .env from .env.example
 docker build -t wa-akg .
 docker run -d --name wa-akg \
   --env-file .env \
@@ -77,55 +72,54 @@ docker run -d --name wa-akg \
   wa-akg
 ```
 
-## Opsi E — Node langsung (tanpa Docker)
+## Opsi E — Run directly with Node (without Docker)
 
 ```bash
 npm ci
-npm run db:push          # sekali, kalau DB masih kosong
+npm run db:push          # once, if the DB is still empty
 npm run build
-npm run start            # custom server di PORT (default 3030)
+npm run start            # custom server on PORT (default 3030)
 ```
 
 ---
 
 ## Environment Variables
 
-| Variable | Wajib | Keterangan |
+| Variable | Required | Notes |
 |---|---|---|
-| `DATABASE_URL` | ✅ | PostgreSQL connection string (mis. dari Neon — gratis) |
-| `AUTH_SECRET` | ✅ | String acak — generate: `node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"` |
+| `DATABASE_URL` | ✅ | PostgreSQL connection string (e.g., from Neon — free) |
+| `AUTH_SECRET` | ✅ | Random string — generate: `node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"` |
 | `AUTH_TRUST_HOST` | ✅ | `true` |
-| `BASE_URL` | ✅ | URL publik, mis. `https://wa.domainmu.com` atau `http://IP:3030` |
-| `NEXTAUTH_URL` | ✅ | Sama dengan BASE_URL |
-| `NEXT_PUBLIC_APP_URL` | ✅ | Sama dengan BASE_URL |
+| `BASE_URL` | ✅ | Public URL, e.g. `https://wa.domain.com` or `http://IP:3030` |
+| `NEXTAUTH_URL` | ✅ | Same as `BASE_URL` |
+| `NEXT_PUBLIC_APP_URL` | ✅ | Same as `BASE_URL` |
 | `NEXT_PUBLIC_API_URL` | ✅ | `BASE_URL` + `/api` |
 | `PORT` | ⬜ | Default 3030 |
 | `TZ` | ⬜ | `Asia/Jakarta` |
-| `NODE_OPTIONS` | ⬜ | RAM kecil: `--max-old-space-size=400` |
-| `NEXT_PUBLIC_SWAGGER_USERNAME/PASSWORD` | ⬜ | Login halaman `/swagger` |
-| `KLIKQRIS_*` | ⬜ | Fallback; lebih baik atur via dashboard (SUPERADMIN) |
+| `NODE_OPTIONS` | ⬜ | Small RAM: `--max-old-space-size=400` |
+| `NEXT_PUBLIC_SWAGGER_USERNAME/PASSWORD` | ⬜ | Login for `/swagger` |
+| `KLIKQRIS_*` | ⬜ | Fallback; better to configure via the dashboard (SUPERADMIN) |
 
-> ⚠️ Isi `BASE_URL`/`NEXTAUTH_URL`/`NEXT_PUBLIC_*` dengan URL/IP host yang benar.
-> Salah isi = redirect login kacau (seperti masalah lokal kemarin).
+> ⚠️ Set `BASE_URL`, `NEXTAUTH_URL`, and `NEXT_PUBLIC_*` to the correct public URL/IP.
+> Setting them incorrectly causes login redirect issues.
 
 ---
 
-## Setelah Deploy (WAJIB)
+## After Deploy (MANDATORY)
 
-1. **Siapkan database** (kalau DB masih kosong): `npm run db:push`.
-   Kalau pakai DB Neon yang sama dengan lokal, tabel sudah ada → lewati.
-2. **Buat admin:** user pertama yang registrasi di `/auth/register` otomatis SUPERADMIN,
-   atau jalankan `npm run make-admin`.
-3. **Payment gateway:** login SUPERADMIN → Settings → Payment Gateway. Webhook KlikQRIS:
-   `https://<domain-kamu>/api/billing/callback`.
-4. **Persistensi:** sesi WhatsApp di DB (`AuthState`) aman saat redeploy; media di
-   `/app/data/media` → mount volume biar tidak hilang.
+1. **Prepare the database** (if empty): `npm run db:push`.
+   If using the same Neon DB as local, the tables already exist → skip this.
+2. **Create an admin:** the first user to register at `/auth/register` becomes SUPERADMIN,
+   or run `npm run make-admin`.
+3. **Payment gateway:** log in as SUPERADMIN → Settings → Payment Gateway. KlikQRIS webhook:
+   `https://<your-domain>/api/billing/callback`.
+4. **Persistence:** WhatsApp sessions are stored in the database (`AuthState`) so they survive redeploys; media is stored in `/app/data/media` → mount a volume so it does not get lost.
 
 ---
 
 ## Checklist
-- [ ] Host always-on (Oracle/VPS/perangkat sendiri/Render Starter) — bukan Vercel/Render Free
-- [ ] `DATABASE_URL` valid & `npm run db:push` sukses (kalau DB baru)
-- [ ] `AUTH_SECRET` di-set
-- [ ] `BASE_URL`/`NEXTAUTH_URL`/`NEXT_PUBLIC_*` = URL/IP host yang benar
-- [ ] Volume `/app/data` ter-mount
+- [ ] Host is always-on (Oracle/VPS/self-hosted/Render Starter) — not Vercel/Render Free
+- [ ] `DATABASE_URL` is valid and `npm run db:push` succeeds (for a new DB)
+- [ ] `AUTH_SECRET` is set
+- [ ] `BASE_URL` / `NEXTAUTH_URL` / `NEXT_PUBLIC_*` point to the correct URL/IP
+- [ ] Volume `/app/data` is mounted

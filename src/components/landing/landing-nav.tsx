@@ -7,8 +7,8 @@ import { Button } from "@/components/ui/button";
 
 export function LandingNav() {
     const [open, setOpen] = useState(false);
-    // null = belum tahu, true/false = status login. Pakai endpoint next-auth
-    // (/api/auth/session) supaya tidak perlu SessionProvider di halaman publik.
+    // null = unknown, true/false = login status. Use the next-auth endpoint
+    // (/api/auth/session) so we do not need a SessionProvider on the public page.
     const [authed, setAuthed] = useState<boolean | null>(null);
 
     useEffect(() => {
@@ -47,7 +47,7 @@ export function LandingNav() {
                     <nav className="hidden md:flex items-center gap-6 lg:gap-8">
                         <Link href="/#features" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Features</Link>
                         <Link href="/#pricing" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Pricing</Link>
-                        <Link href="/docs" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap">API & Docs</Link>
+                        <Link href="/docs" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap">API &amp; Docs</Link>
                         <Link href="https://github.com/vinsaeroy/WA-AKG" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
                             <Github className="h-4 w-4" /> GitHub
                         </Link>
@@ -95,7 +95,7 @@ export function LandingNav() {
                                 onClick={close}
                                 className="px-4 py-3 text-sm font-medium text-foreground/80 hover:bg-foreground/5 rounded-xl transition-colors"
                             >
-                                API & Docs
+                                API &amp; Docs
                             </Link>
                             <Link
                                 href="https://github.com/vinsaeroy/WA-AKG"
