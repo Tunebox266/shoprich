@@ -10,9 +10,9 @@ services:
       - key: NODE_ENV
         value: production
       - key: TZ
-        value: Asia/Jakarta
+        value: Africa/Accra
       - key: PORT
-        value: "3030"
+        value: "10000"
       - key: DATABASE_URL
         sync: false          # isi manual di dashboard (rahasia)
       - key: AUTH_SECRET
