@@ -1,13 +1,13 @@
 // ============================================================
-// BOOTSTRAP — muat .env SEBELUM modul lain di-import
+// BOOTSTRAP — load .env BEFORE other modules are imported
 // ------------------------------------------------------------
-// Prisma client dibuat saat import (src/lib/prisma.ts). Kalau .env
-// belum dimuat saat itu, DATABASE_URL kosong → Prisma default ke
-// localhost:5432 → SEMUA query gagal (register/login/scheduler).
+// Prisma client is created during import (src/lib/prisma.ts). If .env
+// is not loaded by then, DATABASE_URL is empty → Prisma defaults to
+// localhost:5432 → ALL queries fail (register/login/scheduler).
 //
-// tsx TIDAK otomatis memuat .env, jadi kita muat manual di sini,
-// lalu baru dynamic-import server utamanya. Tidak menimpa env yang
-// sudah ada (di Docker/host, env di-inject lewat container).
+// tsx does NOT automatically load .env, so we load it manually here,
+// then dynamically import the main server. Does not override env vars
+// that are already set (in Docker/host, env is injected via container).
 // ============================================================
 import fs from "fs";
 import path from "path";
@@ -23,7 +23,7 @@ function loadEnvFile(file: string) {
             const eq = line.indexOf("=");
             if (eq === -1) continue;
             const key = line.slice(0, eq).trim();
-            if (!key || process.env[key] !== undefined) continue; // jangan timpa env yg sudah ada
+            if (!key || process.env[key] !== undefined) continue; // do not override env vars already set
             let val = line.slice(eq + 1).trim();
             if (
                 (val.startsWith('"') && val.endsWith('"')) ||
@@ -38,14 +38,14 @@ function loadEnvFile(file: string) {
     }
 }
 
-// .env.local menimpa .env (urutan: yang lebih spesifik dimuat dulu
-// karena loadEnvFile tidak menimpa key yang sudah terisi).
+// .env.local overrides .env (load more specific first
+// because loadEnvFile does not override keys already set).
 loadEnvFile(".env.local");
 loadEnvFile(".env");
 
-// Baru import server utama — sekarang Prisma dll. baca DATABASE_URL yang benar.
-// TANPA top-level await (root bukan "type: module" → tsx transpile ke CJS).
+// Now import the main server — Prisma etc. will read the correct DATABASE_URL.
+// WITHOUT top-level await (root is not "type: module" → tsx transpiles to CJS).
 import("./index.js").catch((e) => {
-    console.error("Gagal start server:", e);
+    console.error("Failed to start server:", e);
     process.exit(1);
 });

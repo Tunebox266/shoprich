@@ -27,7 +27,7 @@ export default async function DashboardLayout({
         redirect("/auth/login");
     }
     
-    // Select hanya kolom yang dipakai → aman walau ada kolom baru yang belum di-`db push`
+    // Select only necessary columns → safe even if new columns not yet pushed to DB
     let systemConfig: { appName: string | null; enableRegistration: boolean } | null = null;
     try {
         systemConfig = await prisma.systemConfig.findUnique({
@@ -35,7 +35,7 @@ export default async function DashboardLayout({
             select: { appName: true, enableRegistration: true }
         });
     } catch (e) {
-        console.error("DashboardLayout: gagal baca systemConfig", e);
+        console.error("DashboardLayout: failed to read systemConfig", e);
     }
     const appName = systemConfig?.appName || "WA-AKG";
     const registrationEnabled = systemConfig?.enableRegistration ?? true;

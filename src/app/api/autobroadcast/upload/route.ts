@@ -3,10 +3,10 @@ import { getAuthenticatedUser } from "@/lib/api-auth";
 
 export const runtime = "nodejs";
 
-// Upload media auto-broadcast → dikembalikan sebagai DATA URI (base64), bukan file.
-// Disimpan di DB (kolom mediaUrl) supaya TIDAK hilang saat container restart
-// (filesystem ephemeral, mis. Railway tanpa volume). Saat broadcast dikirim,
-// data URI di-decode kembali jadi buffer.
+// Upload auto-broadcast media → returned as DATA URI (base64), not a file.
+// Stored in DB (mediaUrl column) so it won't be lost during container restarts
+// (filesystem is ephemeral on platforms like Railway without volumes).
+// When broadcast is sent, the data URI is decoded back into a buffer.
 export async function POST(request: NextRequest) {
     const user = await getAuthenticatedUser(request);
     if (!user) return NextResponse.json({ status: false, message: "Unauthorized" }, { status: 401 });
@@ -25,12 +25,12 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ status: false, message: "Only JPG, PNG, WebP, and MP4 allowed" }, { status: 400 });
         }
 
-        // Validate file size. Data URI disimpan di DB, jadi batasi lebih kecil (4MB)
-        // agar tidak membebani DB/loading. Video besar sebaiknya pakai URL eksternal.
+        // Validate file size. Data URIs are stored in DB, so limit smaller (4MB)
+        // to avoid overloading the DB/loading. Large videos should use external URLs.
         const MAX = 4 * 1024 * 1024;
         if (file.size > MAX) {
             return NextResponse.json(
-                { status: false, message: "File terlalu besar (maks 4MB untuk media tersimpan). Untuk file besar, pakai URL media eksternal." },
+                { status: false, message: "File too large (max 4MB for stored media). For large files, use external media URLs." },
                 { status: 400 }
             );
         }
@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({
             status: true,
             message: "File uploaded",
-            // url = data URI (disimpan di DB). filename hanya untuk tampilan.
+            // url = data URI (stored in DB). filename is only for display.
             data: { url: dataUri, filename: file.name, type }
         });
     } catch (error) {

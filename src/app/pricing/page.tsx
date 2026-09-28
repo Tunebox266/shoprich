@@ -5,10 +5,10 @@ import { PricingCards } from "@/components/landing/pricing";
 
 export const metadata = {
     title: "Pricing | RifalosID WhatsApp Gateway",
-    description: "Pilih plan yang sesuai kebutuhanmu. Mulai gratis, bayar via QRIS."
+    description: "Choose a plan that suits you. Start free, pay via QRIS."
 };
 
-// Render dinamis supaya perubahan plan/pricing dari SUPERADMIN langsung tampil.
+// Render dynamically so changes to plans/pricing from SUPERADMIN appear immediately.
 export const dynamic = "force-dynamic";
 
 export default function PricingPage() {
@@ -20,20 +20,19 @@ export default function PricingPage() {
                 <section className="container px-4 md:px-6">
                     <div className="text-center mb-16 max-w-2xl mx-auto">
                         <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl text-foreground mb-4">
-                            Pilih Plan Kamu
+                            Choose Your Plan
                         </h1>
                         <p className="text-muted-foreground text-lg">
-                            Mulai gratis dengan 1.000 request/bulan. Upgrade kapan saja, bayar
-                            instan pakai QRIS (KlikQRIS).
+                            Start free with 1,000 requests/month. Upgrade anytime, pay instantly via QRIS (KlikQRIS).
                         </p>
                     </div>
 
                     <PricingCards ctaHref="/dashboard/billing" />
 
                     <p className="text-center text-sm text-muted-foreground mt-10">
-                        Butuh kuota lebih besar atau kebutuhan khusus?{" "}
+                        Need higher quota or custom requirements?{" "}
                         <Link href="/docs" className="text-primary hover:underline">
-                            Hubungi kami
+                            Contact us
                         </Link>
                         .
                     </p>
