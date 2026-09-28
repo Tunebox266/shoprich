@@ -40,7 +40,7 @@ export function LandingNav() {
                             <Bot className="h-5 w-5 md:h-6 md:w-6" />
                             <div className="absolute inset-0 rounded-full bg-primary blur-md -z-10 opacity-50 animate-pulse-glow" />
                         </div>
-                        <span className="text-foreground tracking-tight" translate="no">RifalosID</span>
+                        <span className="text-foreground tracking-tight" translate="no">RICHES TECH</span>
                     </Link>
 
                     {/* Desktop nav */}
