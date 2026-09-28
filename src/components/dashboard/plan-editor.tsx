@@ -1,7 +1,7 @@
 "use client";
 
-// Editor plan & pricing untuk SUPERADMIN. Mengubah harga, limit, dan benefit
-// yang ditampilkan di halaman pricing + dipakai untuk pembatasan kuota API.
+// Editor for plan & pricing for SUPERADMIN. Updates the prices, limits, and benefits
+// displayed on the pricing page and used for API quota enforcement.
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -85,10 +85,10 @@ export function PlanEditorCard() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body),
             });
-            if (res.ok) toast.success("Konfigurasi plan disimpan. Halaman pricing langsung ikut berubah.");
-            else toast.error("Gagal menyimpan konfigurasi plan");
+            if (res.ok) toast.success("Plan configuration saved. The pricing page updates immediately.");
+            else toast.error("Failed to save plan configuration");
         } catch {
-            toast.error("Error menyimpan konfigurasi plan");
+            toast.error("Error saving plan configuration");
         } finally {
             setSaving(false);
         }
@@ -98,23 +98,23 @@ export function PlanEditorCard() {
         <Card className="border-emerald-500/20 bg-emerald-500/5">
             <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                    <Tag className="h-5 w-5" /> Plan & Pricing
+                    <Tag className="h-5 w-5" /> Plan &amp; Pricing
                 </CardTitle>
                 <CardDescription>
-                    Khusus SUPERADMIN. Atur harga, limit, dan benefit tiap plan. Perubahan langsung
-                    tampil di halaman pricing dan dipakai untuk pembatasan kuota API.
-                    Limit <b>-1</b> = unlimited; harga <b>kosong</b> = custom; <b>0</b> = gratis.
+                    SUPERADMIN only. Adjust the price, limits, and benefits for each plan. Changes are applied
+                    immediately on the pricing page and used for API quota enforcement.
+                    Limit <b>-1</b> = unlimited; price <b>empty</b> = custom; <b>0</b> = free.
                 </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-                {loading && <p className="text-sm text-muted-foreground">Memuat plan…</p>}
+                {loading && <p className="text-sm text-muted-foreground">Loading plans…</p>}
 
                 {plans.map((p, idx) => (
                     <div key={p.id} className="rounded-lg border border-border/60 p-4 space-y-3">
                         <div className="flex items-center justify-between">
                             <span className="font-semibold">{p.id}</span>
                             <label className="flex items-center gap-2 text-xs text-muted-foreground">
-                                Paling Populer
+                                Most Popular
                                 <Switch
                                     checked={!!p.highlight}
                                     onCheckedChange={(c) => update(idx, { highlight: c })}
@@ -124,39 +124,39 @@ export function PlanEditorCard() {
 
                         <div className="grid sm:grid-cols-3 gap-3">
                             <div className="grid gap-1">
-                                <Label className="text-xs">Nama</Label>
+                                <Label className="text-xs">Name</Label>
                                 <input className={inputClass} value={p.name}
                                     onChange={(e) => update(idx, { name: e.target.value })} />
                             </div>
                             <div className="grid gap-1">
-                                <Label className="text-xs">Harga / bulan (IDR, kosong = custom)</Label>
+                                <Label className="text-xs">Price / month (IDR, empty = custom)</Label>
                                 <input className={inputClass} type="number" value={p.price ?? ""}
                                     onChange={(e) => update(idx, { price: e.target.value === "" ? null : Number(e.target.value) })} />
                             </div>
                             <div className="grid gap-1">
-                                <Label className="text-xs">Durasi (hari)</Label>
+                                <Label className="text-xs">Duration (days)</Label>
                                 <input className={inputClass} type="number" value={p.durationDays}
                                     onChange={(e) => update(idx, { durationDays: Number(e.target.value) })} />
                             </div>
                             <div className="grid gap-1">
-                                <Label className="text-xs">Limit / hari (-1 = unlimited)</Label>
+                                <Label className="text-xs">Limit / day (-1 = unlimited)</Label>
                                 <input className={inputClass} type="number" value={p.dailyLimit}
                                     onChange={(e) => update(idx, { dailyLimit: Number(e.target.value) })} />
                             </div>
                             <div className="grid gap-1">
-                                <Label className="text-xs">Limit / bulan (-1 = unlimited)</Label>
+                                <Label className="text-xs">Limit / month (-1 = unlimited)</Label>
                                 <input className={inputClass} type="number" value={p.monthlyLimit}
                                     onChange={(e) => update(idx, { monthlyLimit: Number(e.target.value) })} />
                             </div>
                             <div className="grid gap-1">
-                                <Label className="text-xs">Maks sesi (-1 = unlimited)</Label>
+                                <Label className="text-xs">Max sessions (-1 = unlimited)</Label>
                                 <input className={inputClass} type="number" value={p.maxSessions}
                                     onChange={(e) => update(idx, { maxSessions: Number(e.target.value) })} />
                             </div>
                         </div>
 
                         <div className="grid gap-1">
-                            <Label className="text-xs">Fitur (on/off) — jadi benefit + kontrol akses</Label>
+                            <Label className="text-xs">Features (on/off) — acts as benefits + access control</Label>
                             <div className="grid sm:grid-cols-2 gap-2 rounded-md border border-border/50 p-3">
                                 {CAPABILITIES.map((cap) => (
                                     <label key={cap.id} className="flex items-center justify-between gap-2 text-sm">
@@ -171,7 +171,7 @@ export function PlanEditorCard() {
                         </div>
 
                         <div className="grid gap-1">
-                            <Label className="text-xs">Benefit tambahan (teks bebas, satu per baris)</Label>
+                            <Label className="text-xs">Additional benefits (free text, one per line)</Label>
                             <textarea
                                 className={`${inputClass} h-24 py-2`}
                                 value={(p.features || []).join("\n")}
@@ -183,7 +183,7 @@ export function PlanEditorCard() {
 
                 <Button onClick={save} disabled={saving || loading}>
                     {saving ? <RefreshCw className="h-4 w-4 animate-spin mr-2" /> : <Save className="h-4 w-4 mr-2" />}
-                    Simpan Plan & Pricing
+                    Save Plan &amp; Pricing
                 </Button>
             </CardContent>
         </Card>

@@ -7,8 +7,8 @@ import { headers } from "next/headers";
 import fs from "fs";
 import path from "path";
 
-// Harga plan bisa diubah SUPERADMIN dan disimpan di DB. Halaman ini HARUS dynamic
-// supaya selalu membaca harga terbaru, bukan versi statis hasil build.
+// Plan prices can be changed by SUPERADMIN and stored in the DB. This page MUST be dynamic
+// so it always reads the latest prices instead of a stale build-time version.
 export const dynamic = "force-dynamic";
 
 export const metadata = {
@@ -16,7 +16,7 @@ export const metadata = {
   description: "A powerful, self-hosted dashboard to manage your WhatsApp sessions, schedules, and auto-replies. Built for modern businesses.",
   openGraph: {
     title: "RifalosID | Premium WhatsApp Gateway",
-    description: "Self-hosted WhatsApp Gateway with Multi-device support, Auto-replies, and API integration.",
+    description: "Self-hosted WhatsApp Gateway with multi-device support, auto-replies, and API integration.",
     type: "website",
   },
 };
@@ -31,7 +31,7 @@ export default async function Home() {
     console.error("Failed to read package.json", error);
   }
 
-  // Domain aktif (ikut host yang sedang dipakai), untuk mockup window bar.
+  // Active domain follows the current host for the mock browser bar.
   const hdrs = await headers();
   const host = hdrs.get("x-forwarded-host") || hdrs.get("host") || "dashboard";
 
@@ -54,29 +54,29 @@ export default async function Home() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
                 </span>
-                Release {version} sudah live
+                Release {version} is live
                 <ChevronRight className="h-4 w-4 ml-1 opacity-50" />
               </div>
 
               <h1 className="text-5xl font-extrabold tracking-tighter sm:text-6xl md:text-7xl lg:text-[5.5rem] leading-[0.95] animate-in fade-in slide-in-from-bottom-6 duration-700">
                 <span className="block text-foreground pb-1">WhatsApp Gateway</span>
-                <span className="text-gradient-animate block pb-2">untuk bisnis modern.</span>
+                <span className="text-gradient-animate block pb-2">for modern businesses.</span>
               </h1>
 
               <p className="mx-auto max-w-2xl text-muted-foreground text-lg sm:text-xl leading-relaxed animate-in fade-in slide-in-from-bottom-6 duration-700 delay-150">
-                Kelola banyak sesi WhatsApp, auto-reply pintar, broadcast terjadwal, dan integrasi REST API — semua dalam satu dashboard yang cepat dan elegan.
+                Manage multiple WhatsApp sessions, smart auto-replies, scheduled broadcasts, and REST API integrations — all in one fast, elegant dashboard.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 pt-2 w-full sm:w-auto px-4 animate-in fade-in slide-in-from-bottom-6 duration-700 delay-300">
                 <Link href="/dashboard" className="w-full sm:w-auto">
                   <Button size="lg" className="w-full h-14 px-8 rounded-full text-base shadow-2xl shadow-primary/30 hover:shadow-primary/40 group">
-                    Mulai Sekarang
+                    Get Started
                     <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                   </Button>
                 </Link>
                 <Link href="/docs" className="w-full sm:w-auto">
                   <Button size="lg" variant="glass" className="w-full h-14 px-8 rounded-full text-base transition-all hover:bg-white/40 dark:hover:bg-white/10">
-                    Lihat Dokumentasi
+                    View Documentation
                   </Button>
                 </Link>
               </div>
@@ -95,9 +95,9 @@ export default async function Home() {
                     <span className="ml-3 text-xs text-muted-foreground font-mono truncate">{host}/dashboard</span>
                   </div>
                   <div className="grid grid-cols-3 gap-4 p-5 sm:p-7">
-                    <MockStat icon={<Activity className="h-4 w-4 text-emerald-500" />} label="Sesi Aktif" value="12" />
-                    <MockStat icon={<MessageSquare className="h-4 w-4 text-blue-500" />} label="Pesan Hari Ini" value="8,420" />
-                    <MockStat icon={<Users className="h-4 w-4 text-purple-500" />} label="Kontak" value="3,191" />
+                    <MockStat icon={<Activity className="h-4 w-4 text-emerald-500" />} label="Active Sessions" value="12" />
+                    <MockStat icon={<MessageSquare className="h-4 w-4 text-blue-500" />} label="Messages Today" value="8,420" />
+                    <MockStat icon={<Users className="h-4 w-4 text-purple-500" />} label="Contacts" value="3,191" />
                     <div className="col-span-3 h-28 sm:h-36 rounded-xl bg-gradient-to-br from-primary/10 via-blue-500/5 to-transparent border border-border flex items-end gap-1.5 p-4">
                       {[40, 65, 35, 80, 55, 95, 60, 75, 45, 88, 70, 50].map((h, i) => (
                         <div key={i} className="flex-1 rounded-t bg-gradient-to-t from-primary to-emerald-400/60" style={{ height: `${h}%` }} />
@@ -115,9 +115,9 @@ export default async function Home() {
           <div className="container px-4 md:px-6 py-10">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto text-center">
               <StatItem value="99.9%" label="Uptime" />
-              <StatItem value="<200ms" label="Latensi API" />
+              <StatItem value="<200ms" label="API Latency" />
               <StatItem value="Multi" label="Device Support" />
-              <StatItem value="24/7" label="Otomasi" />
+              <StatItem value="24/7" label="Automation" />
             </div>
           </div>
         </section>
@@ -128,44 +128,44 @@ export default async function Home() {
           <div className="container px-4 md:px-6 relative z-10">
             <div className="text-center mb-16 max-w-2xl mx-auto">
               <div className="inline-flex items-center gap-2 rounded-full glass-panel px-4 py-1.5 text-sm font-medium text-primary mb-5">
-                <Sparkles className="h-4 w-4" /> Fitur Unggulan
+                <Sparkles className="h-4 w-4" /> Featured Features
               </div>
-              <h2 className="text-3xl font-bold tracking-tight sm:text-5xl mb-5 text-foreground">Dirancang untuk skala</h2>
+              <h2 className="text-3xl font-bold tracking-tight sm:text-5xl mb-5 text-foreground">Built for scale</h2>
               <p className="text-muted-foreground text-lg">
-                Fitur lengkap yang dikemas dalam antarmuka yang indah dan performan.
+                Complete features packaged in a beautiful and high-performing interface.
               </p>
             </div>
 
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
               <FeatureCard
                 icon={<Zap className="h-6 w-6 text-amber-500" />}
-                title="API & Webhook Instan"
-                description="Kirim pesan, media, dan tangani event masuk secara real-time lewat REST API yang andal."
+                title="Instant API & Webhooks"
+                description="Send messages, media, and handle incoming events in real time through a reliable REST API."
               />
               <FeatureCard
                 icon={<MessageSquare className="h-6 w-6 text-blue-500" />}
-                title="Auto Reply Pintar"
-                description="Buat balasan otomatis berbasis kata kunci untuk melayani pelanggan 24/7 tanpa lelah."
+                title="Smart Auto Reply"
+                description="Create automatic keyword-based responses to serve customers 24/7 without fatigue."
               />
               <FeatureCard
                 icon={<Clock className="h-6 w-6 text-purple-500" />}
-                title="Scheduler Presisi"
-                description="Jadwalkan pesan untuk dikirim di waktu tertentu. Sempurna untuk kampanye dan pengingat."
+                title="Precise Scheduler"
+                description="Schedule messages to be sent at specific times. Perfect for campaigns and reminders."
               />
               <FeatureCard
                 icon={<Shield className="h-6 w-6 text-emerald-500" />}
-                title="Aman & Privat"
-                description="Arsitektur self-hosted memastikan data dan sesi Anda sepenuhnya dalam kendali Anda."
+                title="Secure & Private"
+                description="The self-hosted architecture ensures your data and sessions are completely under your control."
               />
               <FeatureCard
                 icon={<Code className="h-6 w-6 text-rose-500" />}
                 title="Developer Experience"
-                description="Dibangun dengan TypeScript, dokumentasi Swagger lengkap, dan typing yang ketat."
+                description="Built with TypeScript, complete Swagger documentation, and strict typing."
               />
               <FeatureCard
                 icon={<Globe className="h-6 w-6 text-cyan-500" />}
                 title="Multi-Session"
-                description="Hubungkan, pantau, dan kontrol banyak nomor WhatsApp dari satu dashboard terpadu."
+                description="Connect, monitor, and control multiple WhatsApp numbers from one integrated dashboard."
               />
             </div>
           </div>
@@ -176,16 +176,16 @@ export default async function Home() {
           <div className="container px-4 md:px-6 relative z-10">
             <div className="text-center mb-14 max-w-2xl mx-auto">
               <div className="inline-flex items-center gap-2 rounded-full glass-panel px-4 py-1.5 text-sm font-medium text-primary mb-5">
-                <Sparkles className="h-4 w-4" /> Harga
+                <Sparkles className="h-4 w-4" /> Pricing
               </div>
-              <h2 className="text-3xl font-bold tracking-tight sm:text-5xl mb-5 text-foreground">Sederhana &amp; Transparan</h2>
+              <h2 className="text-3xl font-bold tracking-tight sm:text-5xl mb-5 text-foreground">Simple &amp; Transparent</h2>
               <p className="text-muted-foreground text-lg">
-                Mulai gratis, upgrade kapan saja. Pembayaran cepat via QRIS (KlikQRIS).
+                Start free and upgrade anytime. Fast payments via QRIS (KlikQRIS).
               </p>
             </div>
             <PricingCards ctaHref="/auth/login" />
             <p className="text-center text-sm text-muted-foreground mt-8">
-              Semua plan termasuk akses REST API. Limit dihitung per request API.
+              All plans include REST API access. Limits are calculated per API request.
             </p>
           </div>
         </section>
@@ -193,12 +193,12 @@ export default async function Home() {
         {/* ============ TECH STACK ============ */}
         <section className="py-20 relative overflow-hidden">
           <div className="container px-4 md:px-6 text-center">
-            <p className="text-sm font-semibold text-muted-foreground uppercase tracking-widest mb-10">Dibangun dengan teknologi standar industri</p>
+            <p className="text-sm font-semibold text-muted-foreground uppercase tracking-widest mb-10">Built with industry-standard technologies</p>
             <div className="flex flex-wrap justify-center gap-10 md:gap-16 opacity-60 hover:opacity-100 transition-opacity duration-500">
-              <span className="text-xl md:text-2xl font-bold flex items-center gap-3 text-foreground tracking-tight"><div className="h-3 w-3 rounded-full bg-foreground shadow-[0_0_10px_currentColor]" />Next.js</span>
-              <span className="text-xl md:text-2xl font-bold flex items-center gap-3 text-foreground tracking-tight"><div className="h-3 w-3 rounded-full bg-blue-500 shadow-[0_0_10px_currentColor]" />TypeScript</span>
-              <span className="text-xl md:text-2xl font-bold flex items-center gap-3 text-foreground tracking-tight"><div className="h-3 w-3 rounded-full bg-emerald-500 shadow-[0_0_10px_currentColor]" />Baileys</span>
-              <span className="text-xl md:text-2xl font-bold flex items-center gap-3 text-foreground tracking-tight"><div className="h-3 w-3 rounded-full bg-teal-500 shadow-[0_0_10px_currentColor]" />Prisma</span>
+              <span className="text-xl md:text-2xl font-bold flex items-center gap-3 text-foreground tracking-tight"><div className="h-3 w-3 rounded-full bg-foreground shadow-[0_0_10px_currentColor]" /> Next.js</span>
+              <span className="text-xl md:text-2xl font-bold flex items-center gap-3 text-foreground tracking-tight"><div className="h-3 w-3 rounded-full bg-blue-500 shadow-[0_0_10px_currentColor]" /> TypeScript</span>
+              <span className="text-xl md:text-2xl font-bold flex items-center gap-3 text-foreground tracking-tight"><div className="h-3 w-3 rounded-full bg-emerald-500 shadow-[0_0_10px_currentColor]" /> Prisma</span>
+              <span className="text-xl md:text-2xl font-bold flex items-center gap-3 text-foreground tracking-tight"><div className="h-3 w-3 rounded-full bg-teal-500 shadow-[0_0_10px_currentColor]" /> Baileys</span>
             </div>
           </div>
         </section>
@@ -206,18 +206,18 @@ export default async function Home() {
         {/* ============ CTA BANNER ============ */}
         <section className="py-20 relative">
           <div className="container px-4 md:px-6">
-            <div className="glow-border relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-primary/15 via-blue-500/10 to-transparent border border-border px-8 py-16 md:px-16 md:py-20 text-center max-w-5xl mx-auto">
+            <div className="glow-border relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-primary/15 via-blue-500/10 to-transparent border border-border px-8 py-16 md:px-16 md:py-20">
               <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-[30rem] h-[30rem] bg-primary/20 rounded-full blur-[120px] pointer-events-none" />
               <div className="relative z-10 flex flex-col items-center gap-6">
                 <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-foreground max-w-2xl">
-                  Siap otomasi WhatsApp bisnis Anda?
+                  Ready to automate your business WhatsApp?
                 </h2>
                 <p className="text-muted-foreground text-lg max-w-xl">
-                  Buat akun gratis dalam hitungan menit. Tanpa kartu kredit, langsung pakai.
+                  Create a free account in minutes. No credit card required, ready to use immediately.
                 </p>
                 <Link href="/auth/login">
                   <Button size="lg" className="h-14 px-10 rounded-full text-base shadow-2xl shadow-primary/30 hover:shadow-primary/40 group">
-                    Mulai Gratis Sekarang
+                    Start Free Now
                     <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                   </Button>
                 </Link>
@@ -234,7 +234,7 @@ export default async function Home() {
               <div className="p-2 rounded-xl bg-primary/10">
                 <Bot className="h-6 w-6 text-primary" />
               </div>
-              <span className="text-xl font-bold text-foreground" translate="no">RifalosID</span>
+              <span className="text-xl font-bold text-foreground" translate="no">RIFALOSID</span>
             </div>
             <div className="flex gap-8 text-sm font-medium">
               <Link href="/privacy" className="text-muted-foreground hover:text-foreground transition-colors">Privacy</Link>
@@ -242,7 +242,7 @@ export default async function Home() {
               <Link href="/docs" className="text-muted-foreground hover:text-foreground transition-colors">API &amp; Docs</Link>
             </div>
             <p className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} <span translate="no">RifalosID</span>. All rights reserved.
+              © {new Date().getFullYear()} <span translate="no">RIFALOSID</span>. All rights reserved.
             </p>
           </div>
         </div>
