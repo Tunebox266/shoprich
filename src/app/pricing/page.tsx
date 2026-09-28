@@ -4,7 +4,7 @@ import { LandingNav } from "@/components/landing/landing-nav";
 import { PricingCards } from "@/components/landing/pricing";
 
 export const metadata = {
-    title: "Pricing | RifalosID WhatsApp Gateway",
+    title: "Pricing | Riches Tech WhatsApp Gateway",
     description: "Choose a plan that suits you. Start free, pay via QRIS."
 };
 
@@ -46,11 +46,11 @@ export default function PricingPage() {
                             <Bot className="h-5 w-5 text-primary" />
                         </div>
                         <span className="font-bold text-foreground" translate="no">
-                            RifalosID
+                            Riches Tech
                         </span>
                     </div>
                     <p className="text-sm text-muted-foreground">
-                        © {new Date().getFullYear()} RifalosID
+                        © {new Date().getFullYear()} Riches Tech
                     </p>
                 </div>
             </footer>
