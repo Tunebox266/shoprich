@@ -11,7 +11,7 @@ import { logger } from "./logger";
  */
 function jakartaParts(d = new Date()): { day: string; month: string } {
     const day = new Intl.DateTimeFormat("en-CA", {
-        timeZone: "Asia/Jakarta",
+        timeZone: "Africa/Accra",
         year: "numeric",
         month: "2-digit",
         day: "2-digit"
@@ -149,7 +149,7 @@ export async function enforceApiQuota(request: NextRequest, capability?: Capabil
                 error: NextResponse.json(
                     {
                         status: false,
-                        message: `Fitur ini tidak tersedia di plan ${plan}. Upgrade plan untuk mengaksesnya.`,
+                        message: `This feature is not availabe in the plan ${plan}. Upgrade your plan access it.`,
                         error: "feature_not_in_plan",
                         data: { plan, capability }
                     },
@@ -162,12 +162,12 @@ export async function enforceApiQuota(request: NextRequest, capability?: Capabil
     try {
         const result = await consumeQuota(user.id, plan);
         if (!result.allowed) {
-            const scopeLabel = result.scope === "day" ? "harian" : "bulanan";
+            const scopeLabel = result.scope === "day" ? "daily" : "monthly";
             return {
                 error: NextResponse.json(
                     {
                         status: false,
-                        message: `Limit ${scopeLabel} plan ${plan} sudah habis. Upgrade plan untuk kuota lebih besar.`,
+                        message: `Limit ${scopeLabel} plan ${plan} has been reached. Upgrade plan for larger quota.`,
                         error: "rate_limited",
                         data: {
                             plan,
@@ -191,7 +191,7 @@ export async function enforceApiQuota(request: NextRequest, capability?: Capabil
     } catch (e) {
         // Kalau pencatatan usage gagal, jangan blokir request (fail-open),
         // tapi tetap log biar ketahuan.
-        logger.error("RateLimit", "Gagal konsumsi quota:", e);
+        logger.error("RateLimit", "Failed to consume quota:", e);
         return { user, usage: await getUsage(user.id, plan).catch(() => ({
             plan,
             dayCount: 0,
@@ -237,7 +237,7 @@ export async function enforceCapability(
             error: NextResponse.json(
                 {
                     status: false,
-                    message: `Fitur ini tidak tersedia di plan ${plan}. Upgrade plan untuk mengaksesnya.`,
+                    message: `This feature is not availabe in the plan ${plan}. Upgrade your plan to access it.`,
                     error: "feature_not_in_plan",
                     data: { plan, capability }
                 },
