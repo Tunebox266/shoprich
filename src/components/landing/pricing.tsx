@@ -36,7 +36,7 @@ export async function PricingCards({ ctaHref = "/dashboard/billing" }: { ctaHref
                     >
                         {plan.highlight && (
                             <div className="absolute top-0 right-0 flex items-center gap-1 rounded-bl-2xl bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground">
-                                <Sparkles className="h-3.5 w-3.5" /> Populer
+                                <Sparkles className="h-3.5 w-3.5" /> Popular
                             </div>
                         )}
 
@@ -47,14 +47,14 @@ export async function PricingCards({ ctaHref = "/dashboard/billing" }: { ctaHref
                                 {formatIDR(plan.price)}
                             </span>
                             {!isFree && !isCustom && (
-                                <span className="text-muted-foreground text-sm mb-1">/bulan</span>
+                                <span className="text-muted-foreground text-sm mb-1">/month</span>
                             )}
                         </div>
 
                         <p className="text-sm text-muted-foreground mb-6">
                             {plan.monthlyLimit < 0
-                                ? "Request tanpa batas"
-                                : `${plan.monthlyLimit.toLocaleString("id-ID")} request / bulan`}
+                                ? "Unlimited requestS"
+                                : `${plan.monthlyLimit.toLocaleString("en-US")} requests / month`}
                         </p>
 
                         <ul className="space-y-3 mb-8 flex-1">
@@ -71,7 +71,7 @@ export async function PricingCards({ ctaHref = "/dashboard/billing" }: { ctaHref
                                 className="w-full rounded-full h-12"
                                 variant={plan.highlight ? "default" : "glass"}
                             >
-                                {isFree ? "Mulai Gratis" : isCustom ? "Hubungi Kami" : `Pilih ${plan.name}`}
+                                {isFree ? "Start for free" : isCustom ? "Contact Us" : `Choose ${plan.name}`}
                             </Button>
                         </Link>
                     </div>
@@ -80,7 +80,7 @@ export async function PricingCards({ ctaHref = "/dashboard/billing" }: { ctaHref
             </div>
 
             {/* Hint geser di mobile */}
-            <p className="md:hidden text-center text-xs text-muted-foreground mt-1">← geser untuk lihat plan lain →</p>
+            <p className="md:hidden text-center text-xs text-muted-foreground mt-1">← Swipe to see other plans →</p>
         </div>
     );
 }
