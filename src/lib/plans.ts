@@ -73,12 +73,12 @@ export const PLANS: Record<PlanId, PlanConfig> = {
             sticker: true,
         },
         features: [
-            "1 sesi WhatsApp",
-            "100 request / hari",
-            "1.000 request / bulan",
-            "Auto-reply dasar",
-            "Akses REST API",
-            "Komunitas support"
+            "1 WhatsApp session",
+            "100 requests / day",
+            "1.000 requests / month",
+            " Basic auto-reply",
+            "REST API access",
+            "Community support"
         ]
     },
     STANDARD: {
@@ -100,9 +100,9 @@ export const PLANS: Record<PlanId, PlanConfig> = {
             sticker: true,
         },
         features: [
-            "3 sesi WhatsApp",
-            "1.000 request / hari",
-            "20.000 request / bulan",
+            "3 WhatsApp sessions",
+            "1,000 request / day",
+            "20,000 request / month",
             "Auto-reply + scheduler",
             "Webhook event",
             "Email support"
@@ -126,10 +126,10 @@ export const PLANS: Record<PlanId, PlanConfig> = {
             sticker: true,
         },
         features: [
-            "10 sesi WhatsApp",
-            "5.000 request / hari",
-            "100.000 request / bulan",
-            "Semua fitur Standard",
+            "10 WhatsApp sessions",
+            "5,000 requests / day",
+            "100,000 requests / month",
+            "All Standard features",
             "Auto broadcast",
             "Priority support"
         ]
@@ -152,11 +152,11 @@ export const PLANS: Record<PlanId, PlanConfig> = {
             sticker: true,
         },
         features: [
-            "Sesi WhatsApp unlimited",
-            "Request unlimited",
-            "Semua fitur Pro",
+            "Unlimited WhatsApp sessions",
+            "Unlimited requests",
+            "All Pro features",
             "SLA & dedicated server",
-            "Onboarding khusus",
+            "Dedicated onboarding",
             "Dedicated support"
         ]
     }
@@ -195,6 +195,6 @@ export function effectivePlan(user: {
 
 export function formatIDR(amount: number | null): string {
     if (amount === null) return "Custom";
-    if (amount === 0) return "Gratis";
+    if (amount === 0) return "Free";
     return "Rp" + amount.toLocaleString("id-ID");
 }
