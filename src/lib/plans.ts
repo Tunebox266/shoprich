@@ -27,7 +27,7 @@ export const CAPABILITIES: { id: Capability; label: string }[] = [
     { id: "autoReply", label: "Auto Reply" },
     { id: "broadcast", label: "Broadcast" },
     { id: "autoBroadcast", label: "Auto Broadcast" },
-    { id: "scheduler", label: "Scheduler / Pesan Terjadwal" },
+    { id: "scheduler", label: "Scheduler / Scheduled messages" },
     { id: "webhook", label: "Webhook & API Events" },
     { id: "jpm", label: "JPM SW GC" },
     { id: "sticker", label: "Sticker Maker" },
@@ -101,7 +101,7 @@ export const PLANS: Record<PlanId, PlanConfig> = {
         },
         features: [
             "3 WhatsApp sessions",
-            "1,000 request / day",
+            "1,000 requests / day",
             "20,000 request / month",
             "Auto-reply + scheduler",
             "Webhook event",
@@ -196,5 +196,5 @@ export function effectivePlan(user: {
 export function formatIDR(amount: number | null): string {
     if (amount === null) return "Custom";
     if (amount === 0) return "Free";
-    return "Rp" + amount.toLocaleString("id-ID");
+    return "USD" + amount.toLocaleString("en-US");
 }
