@@ -75,7 +75,7 @@ export const PLANS: Record<PlanId, PlanConfig> = {
         features: [
             "1 WhatsApp session",
             "100 requests / day",
-            "1.000 requests / month",
+            "1,000 requests / month",
             " Basic auto-reply",
             "REST API access",
             "Community support"
