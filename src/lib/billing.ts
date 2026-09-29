@@ -15,7 +15,7 @@ export async function markPaymentPaidAndActivate(paymentId: string): Promise<boo
     return prisma.$transaction(async (tx) => {
         const payment = await tx.payment.findUnique({ where: { id: paymentId } });
         if (!payment) {
-            logger.warn("Billing", `Payment ${paymentId} tidak ditemukan`);
+            logger.warn("Billing", `Payment ${paymentId} not found`);
             return false;
         }
         if (payment.status === "PAID") {
@@ -53,14 +53,14 @@ export async function markPaymentPaidAndActivate(paymentId: string): Promise<boo
         await tx.notification.create({
             data: {
                 userId: payment.userId,
-                title: `Plan ${cfg.name} aktif 🎉`,
-                message: `Pembayaran berhasil. Plan ${cfg.name} aktif sampai ${newExpiry.toLocaleString("id-ID")}.`,
+                title: `Plan ${cfg.name} active 🎉`,
+                message: `Payment successful. Plan ${cfg.name} active until ${newExpiry.toLocaleString("en-US")}.`,
                 type: "SUCCESS",
                 href: "/dashboard/billing"
             }
         }).catch(() => {});
 
-        logger.success("Billing", `Plan ${payment.plan} aktif untuk user ${payment.userId} s/d ${newExpiry.toISOString()}`);
+        logger.success("Billing", `Plan ${payment.plan} active for user ${payment.userId} until ${newExpiry.toISOString()}`);
         return true;
     });
 }
