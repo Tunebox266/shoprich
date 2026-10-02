@@ -17,13 +17,13 @@ export async function GET() {
     // Kembalikan spec minimal yang valid + info error supaya UI tetap render.
     console.error("[api/docs] Failed to build OpenAPI spec:", err);
     const fallback = {
-      openapi: "3.0.0",
+      openapi: "3.0.1",
       info: {
-        title: "WA-AKG API Documentation",
-        version: "1.2.0",
+        title: "RICHES TECH API Documentation",
+        version: "1.8.0",
         description:
-          "⚠️ Gagal memuat spesifikasi lengkap di server. Cek log server. " +
-          "Endpoint tetap berfungsi; ini hanya tampilan dokumentasinya.",
+          "⚠️ Failed to load full specification on server. Check server logs. " +
+          "Endpoint still works; this is only the documentation view.",
       },
       paths: {},
     };
