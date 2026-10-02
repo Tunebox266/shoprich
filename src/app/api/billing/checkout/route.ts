@@ -28,14 +28,14 @@ export async function POST(request: NextRequest) {
 
     if (!planId || cfg.id !== planId) {
         return NextResponse.json(
-            { status: false, message: "Plan tidak valid", error: "invalid_plan" },
+            { status: false, message: "Plan not valid", error: "invalid_plan" },
             { status: 400 }
         );
     }
 
     if (planId === "FREE") {
         return NextResponse.json(
-            { status: false, message: "Plan FREE tidak perlu pembayaran", error: "free_plan" },
+            { status: false, message: "FREE plan does not require payment", error: "free_plan" },
             { status: 400 }
         );
     }
@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
         return NextResponse.json(
             {
                 status: false,
-                message: "Plan ini bersifat custom. Silakan hubungi admin/sales.",
+                message: "This plan is custom. Please contact admin/sales.",
                 error: "custom_plan"
             },
             { status: 400 }
@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
             {
                 status: false,
                 message:
-                    "Payment gateway belum dikonfigurasi/diaktifkan oleh admin.",
+                    "Payment gateway has not been configured / enabled by admin.",
                 error: "gateway_not_configured"
             },
             { status: 503 }
@@ -96,7 +96,7 @@ export async function POST(request: NextRequest) {
 
         return NextResponse.json({
             status: true,
-            message: "Silakan scan QRIS untuk membayar",
+            message: "Please scan QRIS to pay",
             data: {
                 paymentId: updated.id,
                 reference: updated.reference,
@@ -116,7 +116,7 @@ export async function POST(request: NextRequest) {
             data: { status: "FAILED" }
         }).catch(() => {});
         return NextResponse.json(
-            { status: false, message: e?.message || "Gagal membuat transaksi", error: "checkout_failed" },
+            { status: false, message: e?.message || "Failed to create  transaction", error: "checkout_failed" },
             { status: 502 }
         );
     }
