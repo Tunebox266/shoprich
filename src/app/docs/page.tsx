@@ -16,7 +16,7 @@ async function getAppName(): Promise<string> {
         });
         if (cfg?.appName) return cfg.appName;
     } catch { /* ignore */ }
-    return process.env.APP_NAME || 'WA-AKG';
+    return process.env.APP_NAME || 'RICHES TECH';
 }
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -52,10 +52,10 @@ export default async function PublicDocsPage() {
         version = `v${packageJson.version}`;
     } catch (err) {
         content =
-            '# Dokumentasi sedang tidak tersedia\n\n' +
-            'File dokumentasi tidak dapat dimuat di server ini.\n\n' +
-            'Sementara itu, kamu bisa pakai:\n\n' +
-            '- **[Swagger UI](/swagger)** — referensi API interaktif & uji coba endpoint\n' +
+            '# Documentation s currently unavailable\n\n' +
+            'Documentation file could not loaded on the server.\n\n' +
+            'In the maintime, you can use:\n\n' +
+            '- **[Swagger UI](/swagger)** — Interactive API references & endpoint testing\n' +
             '- **[Dashboard API Docs](/dashboard/api-docs)**\n';
         console.error("Error loading docs:", err);
     }
