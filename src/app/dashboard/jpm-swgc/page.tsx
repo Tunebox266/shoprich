@@ -114,8 +114,8 @@ export default function JpmSwgcPage() {
 
         const confirmed = confirm(
             scope === "ALL"
-                ? `Kirim status ke SEMUA grup (${groups.length} grup)? Action ini cukup berat.`
-                : `Kirim status ke ${targets.length} grup terpilih?`
+                ? `Send status to ALL groups (${groups.length} grup)? This action is quite heavy.`
+                : `send status to ${targets.length} selected groups?`
         );
         if (!confirmed) return;
 
@@ -135,7 +135,7 @@ export default function JpmSwgcPage() {
             });
             const data = await res.json();
             if (data.status) {
-                toast.success(`Dispatch dimulai untuk ${data.data?.total || 0} grup. Cek log di Railway.`);
+                toast.success(`Dispatch started for ${data.data?.total || 0} groups. Check the log in status-log.`);
             } else if (res.status === 409) {
                 // Locked — let user clear it manually
                 toast.warning(data.message || "A dispatch is already running", {
@@ -185,7 +185,7 @@ export default function JpmSwgcPage() {
                         <Radio className="h-5 w-5 sm:h-6 sm:w-6" /> JPM SWGC
                     </h1>
                     <p className="text-sm text-muted-foreground mt-1">
-                        Bulk Status Group Channel — broadcast pesan/foto/video sebagai status grup ke semua atau grup terpilih.
+                        Bulk Status Group Channel — broadcast message/photo/video as group status to all or selected groups.
                     </p>
                 </div>
 
@@ -193,7 +193,7 @@ export default function JpmSwgcPage() {
                     <CardHeader>
                         <CardTitle>Compose Status</CardTitle>
                         <CardDescription>
-                            Status akan terkirim sebagai <code>groupStatusMessageV2</code> via <code>relayMessage</code>.
+                            Status will be sent as <code>groupStatusMessageV2</code> via <code>relayMessage</code>.
                         </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
@@ -202,7 +202,7 @@ export default function JpmSwgcPage() {
                             <Textarea
                                 value={text}
                                 onChange={(e) => setText(e.target.value)}
-                                placeholder="Tulis pesan untuk dijadikan status grup..."
+                                placeholder="Write message to used as group status..."
                                 rows={4}
                             />
                         </div>
@@ -360,11 +360,11 @@ export default function JpmSwgcPage() {
 
                         <div className="border-l-2 border-amber-500/50 pl-3 py-2 bg-amber-500/5 rounded text-xs space-y-1">
                             <p className="font-medium flex items-center gap-1">
-                                <Clock className="h-3.5 w-3.5" /> Catatan
+                                <Clock className="h-3.5 w-3.5" /> Note
                             </p>
                             <p className="text-muted-foreground">
-                                Status grup hanya tampil ke anggota grup itu. Group dengan &lt;2 member otomatis di-skip.
-                                Gunakan delay 2000ms+ untuk hindari spam detection oleh WhatsApp.
+                                Group status only appears to members of that group. Group with 1-2 members are automatically skipped. 
+                                Use a delay of 2000ms+ to avoid spam detection by WhatsApp.
                             </p>
                         </div>
 
