@@ -84,7 +84,7 @@ export const PLANS: Record<PlanId, PlanConfig> = {
     STANDARD: {
         id: "STANDARD",
         name: "Standard",
-        price: 50000, // rekomendasi — silakan disesuaikan
+        price: 20, // rekomendasi — silakan disesuaikan
         durationDays: 30,
         dailyLimit: 1000,
         monthlyLimit: 20000,
@@ -111,8 +111,8 @@ export const PLANS: Record<PlanId, PlanConfig> = {
     PRO: {
         id: "PRO",
         name: "Pro",
-        price: 150000, // rekomendasi — silakan disesuaikan
-        durationDays: 30,
+        price: 30, // rekomendasi — silakan disesuaikan
+        durationDays: 40,
         dailyLimit: 5000,
         monthlyLimit: 100000,
         maxSessions: 10,
