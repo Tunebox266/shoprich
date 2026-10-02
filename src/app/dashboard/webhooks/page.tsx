@@ -131,7 +131,7 @@ export default function WebhooksPage() {
                 setApiKeySet(true);
                 setApiKeyHidden(false);
                 setShowApiKey(true); // tampilkan sekali, karena tidak bisa dilihat lagi nanti
-                toast.success("API key baru dibuat. Salin sekarang — tidak akan ditampilkan lagi!", { duration: 8000 });
+                toast.success(" New API key created. Copy now — it will not be shown again!", { duration: 8000 });
             }
         } catch (error) {
             toast.error("Failed to generate API key");
@@ -349,7 +349,7 @@ export default function WebhooksPage() {
                             {apiKey ? (
                                 showApiKey ? apiKey : "••••••••••••••••••••••••••••••••"
                             ) : apiKeySet && apiKeyHidden ? (
-                                <span className="text-muted-foreground">•••••••• (key tersembunyi — hanya ditampilkan sekali saat dibuat)</span>
+                                <span className="text-muted-foreground">•••••••• (Hidden key — only shown once when created)</span>
                             ) : (
                                 <span className="text-muted-foreground">No API key generated</span>
                             )}
@@ -382,7 +382,7 @@ export default function WebhooksPage() {
                     )}
                     {!apiKey && apiKeySet && apiKeyHidden && (
                         <p className="text-xs text-muted-foreground mt-2">
-                            Demi keamanan, API key disimpan ter-enkripsi dan tidak bisa ditampilkan lagi. Klik <b>Regenerate</b> kalau kamu lupa/kehilangan key-nya.
+                            For security, API keys are stored encrypted and cannot be shown again.. Click <b>Regenerate</b> if you forget/lose your key.
                         </p>
                     )}
                 </CardContent>
