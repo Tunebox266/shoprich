@@ -52,9 +52,9 @@ export default function BroadcastPage() {
             if (data.status === "completed") {
                 setLoading(false);
                 if (data.failed === 0) {
-                    toast.success(`Broadcast selesai! ${data.sent} pesan terkirim.`);
+                    toast.success(`Broadcast finished! ${data.sent} message sent.`);
                 } else {
-                    toast.warning(`Broadcast selesai. ${data.sent} terkirim, ${data.failed} gagal.`);
+                    toast.warning(`Broadcast finished. ${data.sent} sent, ${data.failed} failed.`);
                 }
             }
         });
@@ -98,7 +98,7 @@ export default function BroadcastPage() {
             const data = await res.json();
 
             if (res.ok) {
-                toast.info(`Broadcast dimulai untuk ${recipients.length} penerima...`);
+                toast.info(`Broadcast started for ${recipients.length} receipients...`);
             } else {
                 toast.error(data.message || "Failed to start broadcast");
                 setLoading(false);
@@ -122,7 +122,7 @@ export default function BroadcastPage() {
             <div className="space-y-6">
                 <div>
                     <h2 className="text-xl sm:text-3xl font-bold tracking-tight">Broadcast / Blast</h2>
-                    <p className="text-muted-foreground text-sm mt-1">Kirim pesan massal ke banyak penerima sekaligus.</p>
+                    <p className="text-muted-foreground text-sm mt-1">Send bulk messages to many receipients at once.</p>
                 </div>
 
                 <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2">
@@ -134,9 +134,9 @@ export default function BroadcastPage() {
                         </CardHeader>
                         <CardContent className="space-y-4">
                             <div className="space-y-2">
-                                <Label>Target Numbers (e.g., 628123456789)</Label>
+                                <Label>Target Numbers (e.g., 02039767.....)</Label>
                                 <Textarea
-                                    placeholder={"628123456789\n628987654321"}
+                                    placeholder={"02481234567\n05098765432"}
                                     className="min-h-[200px] font-mono text-sm"
                                     value={contacts}
                                     onChange={e => setContacts(e.target.value)}
@@ -176,7 +176,7 @@ export default function BroadcastPage() {
                                         onValueChange={setDelay}
                                         disabled={loading}
                                     />
-                                    <p className="text-xs text-muted-foreground">Delay antar pesan (+ random tambahan untuk menghindari ban).</p>
+                                    <p className="text-xs text-muted-foreground">Delay between messages (+ random extra to avoid ban).</p>
                                 </div>
 
                                 <Button
