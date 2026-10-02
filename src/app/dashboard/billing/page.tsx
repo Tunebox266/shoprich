@@ -39,7 +39,7 @@ function UsageBar({ label, used, limit }: { label: string; used: number; limit: 
             <div className="flex justify-between text-sm mb-1">
                 <span className="text-muted-foreground">{label}</span>
                 <span className="font-medium">
-                    {used.toLocaleString("id-ID")} / {unlimited ? "∞" : limit.toLocaleString("id-ID")}
+                    {used.toLocaleString("en-US")} / {unlimited ? "∞" : limit.toLocaleString("en-US")}
                 </span>
             </div>
             <div className="h-2 rounded-full bg-muted overflow-hidden">
@@ -156,7 +156,7 @@ export default function BillingPage() {
                         <CardDescription>
                             {loading ? "Loading..." : `${usage?.planName || "Free"}`}
                             {usage?.planExpiresAt
-                                ? ` · active until ${new Date(usage.planExpiresAt).toLocaleDateString("id-ID")}`
+                                ? ` · active until ${new Date(usage.planExpiresAt).toLocaleDateString("en-US")}`
                                 : ""}
                         </CardDescription>
                     </div>
@@ -167,8 +167,8 @@ export default function BillingPage() {
                 <CardContent className="space-y-5">
                     {usage ? (
                         <>
-                            <UsageBar label="Request hari ini" used={usage.dayCount} limit={usage.dailyLimit} />
-                            <UsageBar label="Request bulan ini" used={usage.monthCount} limit={usage.monthlyLimit} />
+                            <UsageBar label="Requests today" used={usage.dayCount} limit={usage.dailyLimit} />
+                            <UsageBar label="Requests this month" used={usage.monthCount} limit={usage.monthlyLimit} />
                         </>
                     ) : (
                         <p className="text-sm text-muted-foreground">Loading usage...</p>
