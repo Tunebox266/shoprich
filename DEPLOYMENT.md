@@ -1,4 +1,4 @@
-# Deployment Guide — WA-AKG
+# Deployment Guide — RICHES TECH
 
 This is a single application. The WhatsApp engine, dashboard, and landing/pricing all live in this repository. There is no separate marketing app.
 
@@ -60,16 +60,16 @@ Run it via Docker or directly with Node (see Ops D / E).
 ## Opsi D — Docker (for Oracle / VPS / self-hosted)
 
 ```bash
-git clone https://github.com/Vinsaeroy/WA-AKG.git
-cd WA-AKG
+git clone https://github.com/Tunebox266/shoprich.git
+cd shoprich
 # prepare .env from .env.example
-docker build -t wa-akg .
-docker run -d --name wa-akg \
+docker build -t shoprich .
+docker run -d --name shoprich \
   --env-file .env \
   -p 3030:3030 \
   -v $PWD/data:/app/data \
   --restart unless-stopped \
-  wa-akg
+  shoprich
 ```
 
 ## Opsi E — Run directly with Node (without Docker)
