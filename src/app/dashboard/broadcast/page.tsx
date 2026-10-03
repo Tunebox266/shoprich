@@ -240,13 +240,13 @@ export default function BroadcastPage() {
                                 <div className="bg-background rounded-lg p-3 text-center border">
                                     <div className="text-2xl font-bold text-green-600">{broadcastProgress.sent}</div>
                                     <div className="text-xs text-muted-foreground flex items-center justify-center gap-1 mt-1">
-                                        <CheckCircle2 className="h-3 w-3" /> Terkirim
+                                        <CheckCircle2 className="h-3 w-3" /> Completed
                                     </div>
                                 </div>
                                 <div className="bg-background rounded-lg p-3 text-center border">
                                     <div className="text-2xl font-bold text-red-500">{broadcastProgress.failed}</div>
                                     <div className="text-xs text-muted-foreground flex items-center justify-center gap-1 mt-1">
-                                        <XCircle className="h-3 w-3" /> Gagal
+                                        <XCircle className="h-3 w-3" /> Failed
                                     </div>
                                 </div>
                                 <div className="bg-background rounded-lg p-3 text-center border">
@@ -254,7 +254,7 @@ export default function BroadcastPage() {
                                         {broadcastProgress.total - broadcastProgress.sent - broadcastProgress.failed}
                                     </div>
                                     <div className="text-xs text-muted-foreground flex items-center justify-center gap-1 mt-1">
-                                        <Clock className="h-3 w-3" /> Menunggu
+                                        <Clock className="h-3 w-3" /> Waiting
                                     </div>
                                 </div>
                             </div>
@@ -263,7 +263,7 @@ export default function BroadcastPage() {
                             {broadcastProgress.status === "running" && broadcastProgress.current && (
                                 <div className="flex items-center gap-2 text-sm px-3 py-2 bg-muted/50 rounded-lg">
                                     <RefreshCw className="h-3.5 w-3.5 animate-spin text-blue-500" />
-                                    <span className="text-muted-foreground">Terakhir dikirim ke:</span>
+                                    <span className="text-muted-foreground">Last sent to:</span>
                                     <span className="font-mono font-medium">{formatJid(broadcastProgress.current)}</span>
                                 </div>
                             )}
