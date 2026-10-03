@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🚀 WA-AKG: The Ultimate WhatsApp Gateway & Dashboard
+# 🚀 RICHES TECH: The Ultimate WhatsApp Gateway & Dashboard
 
 [![WhatsApp Bot](https://img.shields.io/badge/WhatsApp-Bot-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://wa.me/)
 [![Next.js](https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
@@ -23,7 +23,7 @@ Built with **Next.js 15**, **React**, and **Baileys** for high-performance messa
 
 ## 📖 Complete Documentation
 
-WA-AKG comes with extensive documentation designed for both developers and users.
+RICHES TECH comes with extensive documentation designed for both developers and users.
 
 - **[Master Project Documentation](docs/PROJECT_DOCUMENTATION.md)**: Architecture, database, and logic flow.
 - **[API Documentation](docs/API_DOCUMENTATION.md)**: Comprehensive OpenAPI / Swagger guide for all **109+ endpoints**.
@@ -32,15 +32,15 @@ WA-AKG comes with extensive documentation designed for both developers and users
 
 ---
 
-## 🌟 Why WA-AKG WhatsApp API Gateway?
+## 🌟 Why RICHES TECH WhatsApp API Gateway?
 
-WA-AKG transforms your WhatsApp into a fully programmable RESTful API. It's designed for scale, reliability, and ease of use, making it the perfect bridge between your business logic and WhatsApp's global reach. Excellent for developing a **WhatsApp Bot**, Automation, or Customer Service Gateway.
+RICHES TECH transforms your WhatsApp into a fully programmable RESTful API. It's designed for scale, reliability, and ease of use, making it the perfect bridge between your business logic and WhatsApp's global reach. Excellent for developing a **WhatsApp Bot**, Automation, or Customer Service Gateway.
 
 ### 🏗️ How it Works
 
 ```mermaid
 graph LR
-    User([User / App]) -->|REST API| API[WA-AKG Gateway]
+    User([User / App]) -->|REST API| API[RICHES TECH Gateway]
     API -->|Baileys| WhatsApp[[WhatsApp Server]]
     API -->|Real-time| DB[(Prisma / DB)]
     WhatsApp -.->|Webhook| API
@@ -90,7 +90,7 @@ graph LR
 
 ## 🧩 Integrations: Native n8n Support
 
-WA-AKG natively supports **n8n**! You can build complex, no-code/low-code WhatsApp automation workflows using our official community nodes.
+RICHES TECH natively supports **n8n**! You can build complex, no-code/low-code WhatsApp automation workflows using our official community nodes.
 
 [![n8n nodes](https://img.shields.io/badge/n8n-nodes--wa--akg-EA4B71?style=for-the-badge&logo=n8n&logoColor=white)](https://www.npmjs.com/package/n8n-nodes-wa-akg)
 
@@ -112,7 +112,7 @@ WA-AKG natively supports **n8n**! You can build complex, no-code/low-code WhatsA
 ### 2. Setup (Standard Setup)
 ```bash
 # Clone and install
-git clone https://github.com/vinsaeroy/WA-AKG.git
+git clone https://github.com/Tunebox266/shoprich.git
 cd WA-AKG
 npm install
 
@@ -155,7 +155,7 @@ You can deploy the application and its MySQL database together using Docker Comp
 
 ## 📚 API Reference Overview
 
-WA-AKG provides a comprehensive REST API to integrate WhatsApp Messaging directly into your applications. Full details in [API_DOCUMENTATION.md](docs/API_DOCUMENTATION.md).
+RICHES TECH provides a comprehensive REST API to integrate WhatsApp Messaging directly into your applications. Full details in [API_DOCUMENTATION.md](docs/API_DOCUMENTATION.md).
 
 > [!TIP]
 > Use the built-in **Swagger UI** for interactive exploration at `/docs`.
@@ -176,7 +176,7 @@ curl -X POST http://localhost:3000/api/messages/session_01/62812345678@s.whatsap
   -H "X-API-Key: your_api_key" \
   -H "Content-Type: application/json" \
   -d '{
-    "message": { "text": "Hello from WA-AKG!" }
+    "message": { "text": "Hello from RICHES TECH!" }
   }'
 ```
 
@@ -204,6 +204,6 @@ curl -X POST http://localhost:3000/api/messages/session_01/62812345678@s.whatsap
 ---
 
 <div align="center">
-  Built with ❤️ by <a href="https://github.com/vinsaeroy">vinsaeroy</a>  
+  Built with ❤️ by <a href="https://github.com/Tunebox26/t">RICHES TECH</a>  
   Licensed under <a href="LICENSE">MIT</a>
 </div>
