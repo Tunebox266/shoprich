@@ -6,8 +6,8 @@ import crypto from "crypto";
 
 export const runtime = "nodejs";
 
-// Kirim payload uji ke URL webhook dan kembalikan status HTTP-nya.
-// Berguna untuk men-debug webhook yang gagal (mis. 404) tanpa menebak-nebak.
+// Send a test payload to the webhook URL and return its HTTP status.
+// Useful for debugging failed webhooks (e.g., 404) without guessing.
 export async function POST(
     request: NextRequest,
     { params }: { params: Promise<{ sessionId: string; id: string }> }
@@ -43,7 +43,7 @@ export async function POST(
         return NextResponse.json({ status: false, message: "Webhook not found" }, { status: 404 });
     }
 
-    // Proteksi SSRF — pastikan URL aman (bukan localhost/IP internal).
+    // SSRF Protection — ensure the URL is safe (not localhost/internal IP).
     const urlCheck = validateExternalUrl(webhook.url);
     if (!urlCheck.valid) {
         return NextResponse.json(
@@ -56,7 +56,7 @@ export async function POST(
         event: "webhook.test",
         sessionId,
         timestamp: new Date().toISOString(),
-        data: { message: "Ini payload uji dari WA-AKG. Kalau kamu menerima ini, webhook-mu berfungsi." },
+        data: { message: "This is a test payload from WA-AKG. If you receive this, your webhook is working." },
     };
     const body = JSON.stringify(payload);
 
@@ -91,7 +91,7 @@ export async function POST(
             ok: res.ok,
             message: res.ok
                 ? `Berhasil! Server tujuan membalas ${res.status} ${res.statusText}.`
-                : `Server tujuan membalas ${res.status} ${res.statusText}. ${res.status === 404 ? "URL salah / endpoint tidak ada — perbaiki URL-nya." : "Pastikan endpoint menerima POST dan membalas 2xx."}`,
+                : `Server tujuan membalas ${res.status} ${res.statusText}. ${res.status === 404 ? "Wrong URL / endpoint does not exist — fix the URL." : "Ensure the endpoint accepts POST and replies with 2xx."}`,
             responsePreview: snippet,
         });
     } catch (err) {
@@ -101,8 +101,8 @@ export async function POST(
             status: false,
             ok: false,
             message: isTimeout
-                ? "Gagal: URL tidak merespons dalam 10 detik (timeout). Cek apakah server tujuan online."
-                : `Gagal terhubung ke URL: ${msg}. Cek apakah URL benar dan bisa diakses dari internet.`,
+                ? "Failed: URL did not respond within 10 seconds (timeout). Check if the target server is online."
+                : `Failed to connect to URL: ${msg}. Check if the URL is correct and accessible from the internet.`,
         });
     }
 }
