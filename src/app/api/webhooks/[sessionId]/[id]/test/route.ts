@@ -90,8 +90,8 @@ export async function POST(
             statusText: res.statusText,
             ok: res.ok,
             message: res.ok
-                ? `Berhasil! Server tujuan membalas ${res.status} ${res.statusText}.`
-                : `Server tujuan membalas ${res.status} ${res.statusText}. ${res.status === 404 ? "Wrong URL / endpoint does not exist — fix the URL." : "Ensure the endpoint accepts POST and replies with 2xx."}`,
+                ? `Success! The target server replied ${res.status} ${res.statusText}.`
+                : `The target server replied ${res.status} ${res.statusText}. ${res.status === 404 ? "Wrong URL / endpoint does not exist — fix the URL." : "Ensure the endpoint accepts POST and replies with 2xx."}`,
             responsePreview: snippet,
         });
     } catch (err) {
